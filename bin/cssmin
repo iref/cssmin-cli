@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.dirname(__FILE__), "../lib")
+
+require 'cssmin_cli'
+
+Mercenary.program(:cssmin_cli) do |p|
+  p.description "Command line tool for minifying CSS."
+  p.syntax "cssmin [options]"
+
+  p.option "source", "-s", "--source FILE",
+    "CSS source file. Is required if input is not provided."
+  p.option "inline", "-i", "--inline CSS",
+    "CSS string. Is required if source isn't provided."
+  p.option "destination", "-d", "--destination [FILE]", "Destination file (defaults to stdout)"
+
+  p.action do |_, options|
+    if options.empty?
+      puts p
+    else
+      if options['source'] || options['inline']
+        CSSMinCli::run(options)
+      else
+        puts "Invalid command. Use --help for more information."
+      end
+    end
+  end
+end
