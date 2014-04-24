@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    cssmin (1.0.3)
+      mercenary
+    mercenary (0.3.2)
+    minitest (5.3.3)
+    rake (10.3.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  cssmin
+  mercenary
+  minitest
+  rake
