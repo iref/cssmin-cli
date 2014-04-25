@@ -50,22 +50,45 @@ module CSSMinCli
   # Returns true if css was successfully minified and stored,
   # otherwise false.
   def self.run(options)
-    destination = options[:destination] || $stdout
+    destination = resolve_destination(options[:destination])
     source = resolve_source(options)
 
     return false unless source
 
     minified = CSSMin::minify(source)
-    IO.write(destination, minified)
 
+    destination.write(minified + "\n")
+    destination.close
+        
     return true
   end
 
+  # Resolves CSS source for given options.
+  # Inline option has precedence over source option.
+  # 
+  # Supported options are:
+  #   source - Path to CSS source file
+  #   inline - String containing CSS
+  #
+  # Returns string, that contains loaded css from source or 
+  # nil if invalid options hash was provided.
   def self.resolve_source(options)
     if options[:inline]
       options[:inline]
     elsif options[:source]
-      IO.read(options[:source]).read
+      IO.read(options[:source])
     end
+  end
+
+  # Resolves destination where minified CSS
+  # should be stored.
+  #
+  # Params:
+  # destination - path to file, where minified css should be stored. Defaults to STDOUT
+  #
+  # Returns opened IO object.
+  def self.resolve_destination(destination)
+    return $stdout unless destination
+    File.open(destination, "w")
   end
 end

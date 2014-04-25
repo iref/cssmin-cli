@@ -7,26 +7,58 @@ describe CSSMinCli do
   subject { CSSMinCli.run(options) }
 
   describe "returns false if source or inline is not in options" do
-    let(:options) { {} }
+    let (:options) { {} }
 
     it { subject.must_equal false }
   end
 
   describe "prints minified css to stdout if destination is not provided" do
-    let(:options) { {:source => "test/fixtures/simple.css"}}
+    let (:options) do
+      {:source => "test/fixtures/simple.css"}
+    end
 
     let(:expected_minified_css) { IO.read("test/fixtures/simple.min.css").strip }
 
-    before do
-      @destination = StringIO.new
-      $stdout = @destination
+    it { Proc.new {subject}.must_output expected_minified_css }
+  end
+
+  describe "reads css from inline option" do
+    let (:options) do
+      {:inline => IO.read("test/fixtures/simple.css")}
+    end
+
+    let (:expected_minified_css) do
+      IO.read("test/fixtures/simple.min.css").strip
+    end
+
+    it { Proc.new { subject }.must_output expected_minified_css }
+  end
+
+  describe "reads css from source option" do
+    let (:options) do
+      {:source => "test/fixtures/simple.css"}
+    end
+
+    let (:expected_minified_css) do
+      IO.read("test/fixtures/simple.min.css").strip
+    end
+
+    it { Proc.new { subject }.must_output expected_minified_css }
+  end
+
+  describe "prints minified css to file if destination is provided" do
+    let (:options) do
+      {:inline => IO.read("test/fixtures/simple.css"),
+       :destination => "test_result.min.css"}
     end
 
     after do
-      $stdout = STDOUT
+      File.delete("test_result.min.css")
     end
-
-    it { @destination.string.must_equal expected_minified_css }
-
+    
+    it do
+      subject
+      File.exists?("test_result.min.css").must_equal true
+    end
   end
 end
