@@ -22,5 +22,6 @@ Mercenary.program(:cssmin_cli) do |p|
       return puts p
     end
     CSSMinCli::run(opts)
+    puts "\n" unless opts[:destination]
   end
 end

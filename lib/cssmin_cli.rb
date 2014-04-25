@@ -57,7 +57,7 @@ module CSSMinCli
 
     minified = CSSMin::minify(source)
 
-    destination.write(minified + "\n")
+    destination.write(minified)
     destination.close
         
     return true
