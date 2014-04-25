@@ -1,0 +1,9 @@
+language: ruby
+rvm:
+  - 2.1.0
+  - 1.9.3
+  - 1.8.6
+  - jruby-18mode
+  - jruby-19mode
+install: bundle install
+script: bundle exec rake test
