@@ -3,6 +3,7 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__), "../lib")
 
 require 'cssmin_cli'
+require 'mercenary'
 
 Mercenary.program(:cssmin_cli) do |p|
   p.description "Command line tool for minifying CSS."
@@ -15,14 +16,12 @@ Mercenary.program(:cssmin_cli) do |p|
   p.option "destination", "-d", "--destination [FILE]", "Destination file (defaults to stdout)"
 
   p.action do |_, options|
-    if options.empty?
-      puts p
-    else
-      if options['source'] || options['inline']
-        CSSMinCli::run(options)
-      else
-        puts "Invalid command. Use --help for more information."
-      end
+    opts = Hash[options.map { |k, v| [k.to_sym, v]}]
+
+    unless opts[:source] || opts[:inline]      
+      return puts p
     end
+    CSSMinCli::run(opts)
+    puts "\n" unless opts[:destination]
   end
 end
