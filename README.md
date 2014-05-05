@@ -7,7 +7,7 @@ It provides command line script for minifying css using CSSMin.
 Instalation
 -----------
 
-Just install it from RubyGems
+Just install it from good old RubyGems.
 
 ```
 gem install cssmin-cli
@@ -32,10 +32,10 @@ cssmin -i 'div {    border:   1px solid #ffff; margin: 0px   }' -o style.min.css
 
 *Note*: If you don't provide output file, output is printed to standart output
 
-Contribute :thumbsup:
+To Contribute... :thumbsup:
 ---------------------
 
-Just send me pull request. :man_with_turban:
+... just send me pull request. :man_with_turban:
 
 Authors
 -------
