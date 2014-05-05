@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = "cssmin-cli"
-  s.version = "1.0.0"
-  s.date = "2014-04-24"
+  s.version = "1.0.2"
+  s.date = "2014-05-05"
   s.summary = "Command line tool for minifying CSS."
   s.description = "Command line tool for minifying CSS. Based on CSSMin library."
 
